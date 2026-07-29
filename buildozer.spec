@@ -1,9 +1,5 @@
 [app]
 
-android.api = 35
-android.minapi = 23
-android.build_tools_version = 35.0.0
-
 source.dir = .
 source.include_exts = py,wav,png,jpg,kv
 
