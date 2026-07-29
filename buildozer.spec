@@ -1,8 +1,8 @@
 [app]
 
-title = Calculator
-package.name = calculator
-package.domain = org.mehrsam
+android.api = 35
+android.minapi = 23
+android.build_tools_version = 35.0.0
 
 source.dir = .
 source.include_exts = py,wav,png,jpg,kv
@@ -12,6 +12,10 @@ version = 1.0
 requirements = python3,kivy
 
 orientation = portrait
+
+android.api = 35
+android.minapi = 23
+android.build_tools_version = 35.0.0
 
 fullscreen = 0
 
