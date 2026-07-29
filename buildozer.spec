@@ -9,7 +9,7 @@ source.include_exts = py,wav,png,jpg,kv
 
 version = 1.0
 
-requirements = python3,kivy,pygame
+requirements = python3,kivy
 
 orientation = portrait
 

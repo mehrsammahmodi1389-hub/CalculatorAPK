@@ -13,7 +13,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 import math
-import pygame
+from kivy.core.audio import SoundLoader
 
 
 from kivy.config import Config
@@ -95,10 +95,8 @@ class CalculatorApp(App):
             self.display.font_size = 48
     
     def play_sound(self):
-        try:
+        if self.click_sound:
             self.click_sound.play()
-        except:
-            pass
 
 
     def change_theme(self):
@@ -191,8 +189,7 @@ class CalculatorApp(App):
 
     def build(self):
         try:
-            pygame.mixer.init()
-            self.click_sound = pygame.mixer.Sound("click.wav")
+            self.click_sound = SoundLoader.load("click.wav")
         except:
             self.click_sound = None
         root = BoxLayout(orientation="vertical", padding=10, spacing=8)
@@ -271,7 +268,7 @@ class CalculatorApp(App):
 )
 
                 self.buttons.append(b)
-                b.bind(on_press=lambda inst, x=t: self.button_click(x))
+                b.bind(on_release=lambda inst, x=t: self.button_click(x))
                 grid.add_widget(b)
 
         theme_box = BoxLayout(
@@ -288,8 +285,8 @@ class CalculatorApp(App):
         theme_box.add_widget(theme_button)
 
         theme_button.bind(
-            on_press=lambda inst: self.change_theme()
-        )
+            on_release=lambda inst: self.change_theme()
+)
 
         root.add_widget(theme_box)
         root.add_widget(grid)
@@ -306,8 +303,9 @@ class CalculatorApp(App):
         )
 
         equal.bind(
-            on_press=lambda inst: self.button_click("=")
-        )
+            on_release=lambda inst: self.button_click("=")
+)
+        
 
         equal_box.add_widget(equal)
         root.add_widget(equal_box)
