@@ -45,9 +45,10 @@ jobs:
         run: |
             yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
             $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME "platform-tools" "build-tools;35.0.0" "platforms;android-35"
-            - name: Build APK
-                run: |
-                buildozer android debug
+
+      - name: Build APK
+        run: |
+          buildozer android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
