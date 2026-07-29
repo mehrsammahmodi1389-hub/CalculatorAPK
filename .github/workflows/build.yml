@@ -40,9 +40,12 @@ jobs:
         run: |
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
+      
       - name: Install Android tools
         run: |
-          sdkmanager "build-tools;37.0.0" "platforms;android-35"
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "build-tools;37.0.0" "platforms;android-35"
+
 
       - name: Build APK
         run: |
