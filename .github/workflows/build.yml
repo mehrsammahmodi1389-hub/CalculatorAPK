@@ -49,10 +49,7 @@ jobs:
           "build-tools;35.0.0" \
           "ndk;27.3.13750724"
 
-      - name: Clean Buildozer
-        run: |
-          buildozer android clean
-
+      
       - name: Build APK
         run: |
           buildozer android debug
