@@ -47,14 +47,24 @@ jobs:
         mkdir -p $HOME/.android
         touch $HOME/.android/repositories.cfg
 
-        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+    - name: Setup Android SDK
+      run: |
 
-        sdkmanager \
+        mkdir -p $HOME/.android
+        touch $HOME/.android/repositories.cfg
+
+        SDKMANAGER=$(find $ANDROID_HOME -name sdkmanager | head -n 1)
+
+        echo "sdkmanager path:"
+        echo $SDKMANAGER
+
+        yes | $SDKMANAGER --licenses || true
+
+        $SDKMANAGER \
         "platform-tools" \
         "platforms;android-35" \
         "build-tools;35.0.0" \
         "ndk;28.0.13004108"
-
 
     - name: Set Android variables
       run: |
