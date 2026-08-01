@@ -47,9 +47,15 @@ jobs:
           "platform-tools" \
           "platforms;android-35" \
           "build-tools;35.0.0" \
-          "ndk;27.3.13750724"
+          "ndk;28.0.13004108"
 
       - name: Clean Buildozer
+        run: |
+          rm -rf .buildozer
+          rm -rf bin
+
+
+      - name: Clean build
         run: |
           rm -rf .buildozer
           rm -rf bin
