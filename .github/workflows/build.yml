@@ -33,54 +33,39 @@ jobs:
         libssl-dev cmake
 
 
-    - name: Install Build tools
+    - name: Install build tools
       run: |
         python -m pip install --upgrade pip
         pip install cython==0.29.36
-        pip install buildozer==1.6.0
+        pip install buildozer==1.5.0
         pip install python-for-android==2024.1.21
+        pip install sh==1.14.3
 
 
-    - name: Setup Android
+    - name: Install Android tools
       run: |
 
         mkdir -p $HOME/.android
         touch $HOME/.android/repositories.cfg
 
-    - name: Setup Android SDK
-      run: |
+        yes | sdkmanager --licenses || true
 
-        mkdir -p $HOME/.android
-        touch $HOME/.android/repositories.cfg
-
-        SDKMANAGER=$(find $ANDROID_HOME -name sdkmanager | head -n 1)
-
-        echo "sdkmanager path:"
-        echo $SDKMANAGER
-
-        yes | $SDKMANAGER --licenses || true
-
-        $SDKMANAGER \
+        sdkmanager \
         "platform-tools" \
         "platforms;android-35" \
         "build-tools;35.0.0" \
         "ndk;28.0.13004108"
 
-    - name: Set Android variables
-      run: |
-        echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/28.0.13004108" >> $GITHUB_ENV
-
 
     - name: Clean
       run: |
-        rm -rf ~/.buildozer
         rm -rf .buildozer
         rm -rf bin
 
 
     - name: Build APK
       run: |
-        buildozer android debug
+        buildozer -v android debug
 
 
     - name: Upload APK
