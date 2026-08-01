@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-22.04
 
     steps:
@@ -22,54 +23,87 @@ jobs:
         python-version: "3.11"
 
 
-    - name: Install packages
+    - name: Install dependencies
       run: |
         sudo apt update
         sudo apt install -y \
-        git zip unzip openjdk-17-jdk \
-        autoconf automake libtool \
-        pkg-config zlib1g-dev \
-        libncurses5-dev libffi-dev \
-        libssl-dev cmake
+          git zip unzip \
+          openjdk-17-jdk \
+          autoconf automake libtool \
+          pkg-config zlib1g-dev \
+          libncurses5-dev \
+          libffi-dev \
+          libssl-dev \
+          cmake
 
 
-    - name: Install build tools
-      run: |
-        python -m pip install --upgrade pip
-        pip install cython==0.29.36
-        pip install buildozer==1.5.0
-        pip install python-for-android==2024.1.21
-        pip install sh==1.14.3
-
-
-    - name: Install Android tools
+    - name: Setup Android SDK
       run: |
 
         mkdir -p $HOME/.android
         touch $HOME/.android/repositories.cfg
 
+        export ANDROID_HOME=$HOME/android-sdk
+        mkdir -p $ANDROID_HOME/cmdline-tools
+
+        cd $ANDROID_HOME/cmdline-tools
+
+        wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+
+        unzip -q commandlinetools-linux-11076708_latest.zip
+
+        mv cmdline-tools latest
+
+        export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
+
         yes | sdkmanager --licenses || true
 
+
         sdkmanager \
-        "platform-tools" \
-        "platforms;android-35" \
-        "build-tools;35.0.0" \
-        "ndk;28.0.13004108"
+          "platform-tools" \
+          "platforms;android-35" \
+          "build-tools;35.0.0" \
+          "ndk;28.0.13004108"
 
 
-    - name: Clean
+
+    - name: Install Buildozer
       run: |
+
+        python -m pip install --upgrade pip
+
+        pip install cython==0.29.36
+
+        pip install buildozer==1.5.0
+
+        pip install python-for-android==2024.1.21
+
+        pip install sh==1.14.3
+
+
+
+    - name: Clean build
+      run: |
+
         rm -rf .buildozer
         rm -rf bin
 
 
+
     - name: Build APK
       run: |
+
+        export ANDROID_HOME=$HOME/android-sdk
+        export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
+
         buildozer -v android debug
+
 
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
+
       with:
         name: Calculator-APK
+
         path: bin/*.apk
