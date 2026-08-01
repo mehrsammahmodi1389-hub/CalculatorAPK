@@ -5,13 +5,11 @@ title = Calculator
 package.name = calculator
 package.domain = org.mehrsam
 
-
 source.dir = .
+
 source.include_exts = py,png,jpg,kv,wav
 
-
 icon.filename = %(source.dir)s/icon.png
-
 
 version = 1.0
 
@@ -24,11 +22,12 @@ orientation = portrait
 fullscreen = 0
 
 
-
 android.api = 35
+
 android.minapi = 23
 
-android.ndk = 27.2.12479018
+android.ndk_path = /opt/android-sdk/ndk/28.0.13004108
+
 android.archs = arm64-v8a
 
 
@@ -36,7 +35,6 @@ android.accept_sdk_license = True
 
 
 log_level = 2
-
 
 
 [buildozer]
