@@ -27,7 +27,6 @@ android.minapi = 23
 android.build_tools_version = 35.0.0
 android.archs = arm64-v8a, armeabi-v7a
 android.permissions =
-
 # Logging
 log_level = 2
 

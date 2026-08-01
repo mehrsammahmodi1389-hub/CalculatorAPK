@@ -50,6 +50,11 @@ jobs:
           "ndk;27.3.13750724"
 
       
+      - name: Remove old build files
+        run: |
+          rm -rf .buildozer
+
+
       - name: Build APK
         run: |
           buildozer android debug
