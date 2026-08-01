@@ -1,6 +1,7 @@
 [app]
 
 title = Calculator
+
 package.name = calculator
 package.domain = org.mehrsam
 
@@ -11,6 +12,7 @@ icon.filename = %(source.dir)s/icon.png
 
 version = 1.0
 
+
 requirements = python3,kivy
 
 orientation = portrait
@@ -20,9 +22,13 @@ fullscreen = 0
 
 android.api = 35
 android.minapi = 23
-android.build_tools_version = 35.0.0
+
 android.ndk = 28c
-android.archs = arm64-v8a
+
+android.archs = arm64-v8a, armeabi-v7a
+
+android.permissions =
+
 
 log_level = 2
 
