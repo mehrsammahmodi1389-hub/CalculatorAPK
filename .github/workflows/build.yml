@@ -18,34 +18,40 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Accept Android Licenses
+      - name: Install system packages
         run: |
-          mkdir -p ~/.android
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "build-tools;37.0.0" || true
-
-      - name: Prepare Android SDK
-        run: |
-          mkdir -p ~/.android
-          touch ~/.android/repositories.cfg
-
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \
-          "platform-tools" \
-          "platforms;android-35" \
-          "build-tools;37.0.0"
+          sudo apt update
+          sudo apt install -y \
+          git zip unzip openjdk-17-jdk \
+          python3-pip autoconf automake libtool \
+          pkg-config zlib1g-dev libncurses5-dev \
+          libncursesw5-dev cmake \
+          libffi-dev libssl-dev \
+          libltdl-dev
 
       - name: Install Buildozer
         run: |
           python -m pip install --upgrade pip
           pip install cython==0.29.36
           pip install buildozer==1.5.0
+          pip install python-for-android==2024.01.21
 
-
-      - name: Check Android SDK
+      - name: Setup Android SDK licenses
         run: |
-          ls $ANDROID_HOME/build-tools
+          mkdir -p ~/.android
+          touch ~/.android/repositories.cfg
+
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \
+          "platform-tools" \
+          "platforms;android-35" \
+          "build-tools;35.0.0" \
+          "ndk;27.3.13750724"
+
+      - name: Clean Buildozer
+        run: |
+          buildozer android clean
 
       - name: Build APK
         run: |
