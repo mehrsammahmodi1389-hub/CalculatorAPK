@@ -29,6 +29,16 @@ jobs:
           libncursesw5-dev cmake \
           libffi-dev libssl-dev
 
+      - name: Accept Android SDK licenses
+        run: |
+          mkdir -p ~/.android
+          touch ~/.android/repositories.cfg
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \
+          "platform-tools" \
+          "platforms;android-35" \
+          "build-tools;35.0.0"
+
       - name: Install Buildozer
         run: |
           python -m pip install --upgrade pip
