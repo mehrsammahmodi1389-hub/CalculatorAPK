@@ -52,7 +52,7 @@ jobs:
         "platform-tools" \
         "platforms;android-35" \
         "build-tools;35.0.0" \
-        "ndk;27.3.13750724"
+        "ndk;27.2.12479018"
 
 
     - name: Clean build
