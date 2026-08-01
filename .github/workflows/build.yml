@@ -32,11 +32,10 @@ jobs:
 
       - name: Accept Android SDK licenses
         run: |
-          yes | sdkmanager --licenses
-          yes | sdkmanager "build-tools;37.0.0"
+          echo y | $ANDROID_HOME/cmdline-tools/*/bin/sdkmanager --licenses
+          echo y | $ANDROID_HOME/cmdline-tools/*/bin/sdkmanager "build-tools;37.0.0"
 
           
-
       - name: Install Buildozer
         run: |
           python -m pip install --upgrade pip
