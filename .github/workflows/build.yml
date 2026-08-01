@@ -28,11 +28,14 @@ jobs:
           libffi-dev libssl-dev
 
 
-      - name: Accept Android licenses
-        run: |
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "build-tools;37.0.0"
 
+
+      - name: Accept Android SDK licenses
+        run: |
+          yes | sdkmanager --licenses
+          yes | sdkmanager "build-tools;37.0.0"
+
+          
 
       - name: Install Buildozer
         run: |
